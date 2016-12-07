@@ -2,7 +2,7 @@ from collections import Counter
 
 lines = []
 with open('input/06') as f:
-    lines = [line.rstrip('\n') for line in f.readlines()]
+    lines = [line.rstrip('\n') for line in f]
 
 encoded_positions = {}
 for line in lines:
