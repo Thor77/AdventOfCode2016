@@ -11,7 +11,11 @@ for line in lines:
         encoded_positions[position] += char
 
 message = ''
+message_p2 = ''
 for _, encoded in encoded_positions.items():
-    message += Counter(encoded).most_common(1)[0][0]
+    most_common = Counter(encoded).most_common()
+    message += most_common[0][0]
+    message_p2 += most_common[-1][0]
 
 print('Message:', message)
+print('Message (part2):', message_p2)
