@@ -4,7 +4,7 @@ with open('input/12') as f:
         line.rstrip('\n') for line in f
     ]
 
-register = {}
+register = {'c': 1}  # PART 2 // {} for PART 1
 i = 0  # use verbose for-loop to support jumping
 while i < len(instructions):
     instruction = instructions[i].split()
