@@ -21,7 +21,11 @@ while i < len(instructions):
         register[data[0]] -= 1
     elif command == 'jnz':
         var, jump = data
-        if register.get(var, 0) != 0:
+        try:
+            var = int(var)
+        except ValueError:
+            var = register.get(var, 0)
+        if var != 0:
             i += int(jump)
             continue
     i += 1
