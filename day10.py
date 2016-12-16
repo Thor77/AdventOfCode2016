@@ -45,7 +45,7 @@ for compare_instruction in compare_instructions:
     if len(sorted_chips) > 1:
         higher = sorted_chips[-1]
     high_type, high_name = compare_instruction.group('high').split()
-    if high_type == 'bot':
+    if high_type == 'bot' and high_name in bots:
         bots[high_name].chips.append(higher)
     elif high_type == 'output':
         if high_name in outputs:
@@ -53,7 +53,7 @@ for compare_instruction in compare_instructions:
         else:
             outputs[high_name] = Output(high_name, chips=[higher])
     low_type, low_name = compare_instruction.group('low').split()
-    if low_type == 'bot':
+    if low_type == 'bot' and low_name in bots:
         bots[low_name].chips.append(lower)
     elif low_type == 'output':
         if low_name in outputs:
