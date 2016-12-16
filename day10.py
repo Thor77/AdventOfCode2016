@@ -61,6 +61,6 @@ for compare_instruction in compare_instructions:
         else:
             outputs[low_name] = Output(low_name, chips=[lower])
     # empty bots chips
-    bots[bot_name].chips = []
+    bots[bot_name] = bots[bot_name]._replace(chips=[])
 
 print(bots, outputs)
