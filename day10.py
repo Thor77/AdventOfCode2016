@@ -64,3 +64,7 @@ while bots:
                 if low_type == 'bot' else Output(*args, **kwargs)
         # remove bot from store
         del bots[bot.number]
+
+# PART 2
+chip0, chip1, chip2 = [outputs[str(cn)].chips[0] for cn in range(3)]
+print('Solution (Part 2):', chip0 * chip1 * chip2)
