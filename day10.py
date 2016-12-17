@@ -34,31 +34,33 @@ for instruction in instructions:
         cmpd = compare_match.groupdict()
         bot_instructions[cmpd['bot']] = cmpd['high'], cmpd['low']
 
+target_types = {
+    'bot': bots,
+    'output': outputs
+}
 # now move chips around
-for compare_instruction in []:
-    bot_name = compare_instruction.group('bot')
-    if bot_name not in bots:
-        continue
-    # compare chips and choose lower + higher one
-    sorted_chips = bots[bot_name].chips
-    lower = sorted_chips[0]
-    if len(sorted_chips) > 1:
-        higher = sorted_chips[-1]
-    high_type, high_name = compare_instruction.group('high').split()
-    if high_type == 'bot' and high_name in bots:
-        bots[high_name].chips.append(higher)
-    elif high_type == 'output':
-        if high_name in outputs:
-            outputs[high_name].chips.append(higher)
+while bots:
+    for _, bot in list(filter(lambda i: len(i[1].chips) == 2, bots.items())):
+        lower_chip, higher_chip = sorted(bot.chips)
+        if lower_chip == 17 and higher_chip == 61:
+            print('Solution (Part 1):', bot)
+        higher, lower = bot_instructions[bot.number]
+        # parse instruction
+        high_type, high_name = higher.split()
+        if high_name in target_types[high_type]:
+            target_types[high_type][high_name].chips.append(higher_chip)
         else:
-            outputs[high_name] = Output(high_name, chips=[higher])
-    low_type, low_name = compare_instruction.group('low').split()
-    if low_type == 'bot' and low_name in bots:
-        bots[low_name].chips.append(lower)
-    elif low_type == 'output':
-        if low_name in outputs:
-            outputs[low_name].chips.append(lower)
+            args = (high_name,)
+            kwargs = {'chips': [higher_chip]}
+            target_types[high_type][high_name] = Bot(*args, **kwargs) \
+                if high_type == 'bot' else Output(*args, **kwargs)
+        low_type, low_name = lower.split()
+        if low_name in target_types[low_type]:
+            target_types[low_type][low_name].chips.append(lower_chip)
         else:
-            outputs[low_name] = Output(low_name, chips=[lower])
-    # empty bots chips
-    bots[bot_name] = bots[bot_name]._replace(chips=[])
+            args = (low_name,)
+            kwargs = {'chips': [lower_chip]}
+            target_types[low_type][low_name] = Bot(*args, **kwargs) \
+                if low_type == 'bot' else Output(*args, **kwargs)
+        # remove bot from store
+        del bots[bot.number]
