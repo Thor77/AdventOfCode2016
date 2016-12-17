@@ -17,9 +17,9 @@ compare_re = re.compile(
 )
 bots = {}
 outputs = {}
+bot_instructions = {}
 
-# first initialize all bots
-compare_instructions = []
+# first initialize all bots and collect instructions
 for instruction in instructions:
     value_match = value_re.match(instruction)
     compare_match = compare_re.match(instruction)
@@ -31,11 +31,11 @@ for instruction in instructions:
         else:
             bots[bot_number] = Bot(bot_number, chips=[value])
     elif compare_match:
-        compare_instructions.append(compare_match)
+        cmpd = compare_match.groupdict()
+        bot_instructions[cmpd['bot']] = cmpd['high'], cmpd['low']
 
-print(bots, outputs)
 # now move chips around
-for compare_instruction in compare_instructions:
+for compare_instruction in []:
     bot_name = compare_instruction.group('bot')
     if bot_name not in bots:
         continue
@@ -62,5 +62,3 @@ for compare_instruction in compare_instructions:
             outputs[low_name] = Output(low_name, chips=[lower])
     # empty bots chips
     bots[bot_name] = bots[bot_name]._replace(chips=[])
-
-print(bots, outputs)
