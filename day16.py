@@ -38,3 +38,4 @@ if __name__ == '__main__':
     with open('input/16') as f:
         initial_state = f.read().rstrip('\n')
     print('Solution (Part 1):', solve(initial_state))
+    print('Solution (Part 2):', solve(initial_state, disk_size=35651584))
