@@ -26,6 +26,7 @@ def caesar_decrypt(text, shift):
         for char in text
     )
 
+
 room_re = re.compile(r'(?P<name>.*)-(?P<sector_id>\d+)\[(?P<checksum>\w+)\]')
 valid_rooms = []
 

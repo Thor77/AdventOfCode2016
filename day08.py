@@ -62,6 +62,7 @@ def print_matrix(matrix):
     for line in matrix:
         print(''.join(map(lambda c: '#' if c else '.', line)))
 
+
 matrix = Matrix()
 rect_re = re.compile(r'rect\ (?P<width>\d+)x(?P<height>\d+)')
 rotate_re = re.compile(

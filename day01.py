@@ -11,6 +11,7 @@ def calculate_distance(x, y):
         y *= -1
     return x + y
 
+
 orientation = 1  # N, E, S, W
 x, y = 0, 0
 

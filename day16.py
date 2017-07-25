@@ -33,6 +33,7 @@ def solve(input, disk_size=272):
     return generate_checksum(
         generate_dragon_curve(input, disk_size=disk_size)[:disk_size])
 
+
 if __name__ == '__main__':
     initial_state = ''
     with open('input/16') as f:

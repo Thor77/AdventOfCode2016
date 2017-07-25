@@ -23,6 +23,7 @@ def part1(elf_count):
     elf_count_binary = bin(elf_count)[2:]
     return int(elf_count_binary[1:] + elf_count_binary[-1], 2)
 
+
 if __name__ == '__main__':
     elf_count = 0
     with open('input/19') as f:

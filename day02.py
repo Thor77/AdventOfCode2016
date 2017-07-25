@@ -32,6 +32,7 @@ class Numpad:
         if new_value < len(self.matrix[self.__index[0]]):
             self.__index[1] = new_value
 
+
 lines = []
 with open('input/02') as f:
     lines = [
