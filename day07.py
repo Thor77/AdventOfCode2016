@@ -44,38 +44,41 @@ def parse_address(address):
     return address_sequences, hypernet_sequences
 
 
-addresses = []
-with open('input/07') as f:
-    addresses = [
-        parse_address(line.rstrip('\n'))
-        for line in f
-    ]
-
-supporting_tls = 0
-for address_sequences, hypernet_sequences in addresses:
-    if list(filter(contains_abba, address_sequences)) \
-            and not list(filter(contains_abba, hypernet_sequences)):
-        supporting_tls += 1
-
-print(supporting_tls, 'out of', len(addresses), 'support tls')
-
-
 def find_aba_or_bab(text):
     for c1, c2, c3 in window(text, size=3):
         if c1 == c3 and c1 != c2:
             yield c1, c2
     else:
-        return [(None, None)]
+        yield (None, None)
 
 
-supporting_ssl = 0
-for address_sequences, hypernet_sequences in addresses:
+
+
+
+def supports_tls(address):
+    address_sequences, hypernet_sequences = address
+    if list(filter(contains_abba, address_sequences)) \
+            and not list(filter(contains_abba, hypernet_sequences)):
+        return True
+
+
+def supports_ssl(address):
+    address_sequences, hypernet_sequences = address
     aba_s_in_address = sum(list(map(list, (map(find_aba_or_bab, address_sequences)))), [])
     bab_s_in_hypernet = sum(list(map(list, (map(find_aba_or_bab, hypernet_sequences)))), [])
     for a_char, b_char in aba_s_in_address:
         if not a_char or not b_char:
             continue
         if (b_char, a_char) in bab_s_in_hypernet:
-            supporting_ssl += 1
+            return True
 
-print(supporting_ssl, 'support ssl')
+
+if __name__ == '__main__':
+    addresses = []
+    with open('input/07') as f:
+        addresses = [
+            parse_address(line.rstrip('\n'))
+            for line in f
+        ]
+    print(len(list(filter(supports_tls, addresses))), 'support tls')
+    print(len(list(filter(supports_ssl, addresses))), 'support ssl')
