@@ -4,11 +4,16 @@ import importlib
 from os import path as ospath
 
 
-def single(func):
-    @functools.wraps(func)
-    def wrapped_func(lines):
-        return func(lines[0])
-    return wrapped_func
+def single(mod=None):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapped_func(lines):
+            line = lines[0]
+            if mod:
+                line = mod(line)
+            return func(line)
+        return wrapped_func
+    return decorator
 
 
 input_directory = 'input/'
